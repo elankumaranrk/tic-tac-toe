@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import Status from './Status';
 import Board from './Board';
 import Controls from './Controls';
+import BoardLogic from '../lib/Board';
 
 export default class Game extends Component {
 	state = {
 		cells: new Array(9).fill(''),
 		isXNext: true,
-		mode: 'easy'
+		mode: 'easy',
+		ended: false,
+		winner: ''
 	};
 	onModeChange = ({ target }) => {
 		const { value } = target;
@@ -21,9 +24,22 @@ export default class Game extends Component {
 		newCells[cellIndex] = isXNext ? 'X' : 'O';
 
 		this.setState({ cells: newCells, isXNext: !isXNext });
+		this.checkWinner(newCells);
 	};
+
+	checkWinner(cells) {
+		return new Promise(resolve => setTimeout(resolve, 200)).then(() => {
+			const board = new BoardLogic(cells);
+			const winner = board.isTerminal();
+			if (winner) {
+				this.setState({ ended: true, winner });
+			} else if (board.isFull()) {
+				this.setState({ ended: true, winner: 'XO' });
+			}
+		});
+	}
 	render() {
-		const { cells, isXNext, mode } = this.state;
+		const { cells, isXNext, mode, ended, winner } = this.state;
 		return (
 			<div>
 				<Status
@@ -31,7 +47,12 @@ export default class Game extends Component {
 					mode={mode}
 					onModeChange={this.onModeChange}
 				/>
-				<Board cells={cells} cellClickHandler={this.cellClickHandler} />
+				<Board
+					ended={ended}
+					winner={winner}
+					cells={cells}
+					cellClickHandler={this.cellClickHandler}
+				/>
 				<Controls />
 			</div>
 		);
