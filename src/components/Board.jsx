@@ -4,27 +4,17 @@ import Cells from './Cells';
 import Background from './svg/Background';
 
 export default class Board extends Component {
-	state = {
-		cells: new Array(9).fill(''),
-		isXNext: true
-	};
-	static propTypes = {};
-
-	cellClickHandler = cellIndex => {
-		const { cells, isXNext } = this.state;
-
-		let newCells = cells.slice();
-		newCells[cellIndex] = isXNext ? 'X' : 'O';
-
-		this.setState({ cells: newCells, isXNext: !isXNext });
+	static propTypes = {
+		cells: PropTypes.arrayOf(PropTypes.string),
+		cellClickHandler: PropTypes.func
 	};
 
 	render() {
-		const { cells } = this.state;
+		const { cells, cellClickHandler } = this.props;
 		return (
 			<div className="board">
 				<Background />
-				<Cells cells={cells} cellClickHandler={this.cellClickHandler} />
+				<Cells cells={cells} cellClickHandler={cellClickHandler} />
 			</div>
 		);
 	}

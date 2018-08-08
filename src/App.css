@@ -2,7 +2,7 @@
 	--font-family: 'Roboto', sans-serif;
 	--background-color: rgba(0, 0, 0, 0.02);
 	--color: rgba(0, 0, 0, 0.74);
-	--accent-color: skyblue;
+	--accent-color: #14bdac;
 	--accent-hover-color: rgba(255, 255, 255, 0.1);
 	--indicator-background-color: rgba(255, 255, 255, 0.8);
 }
@@ -29,7 +29,35 @@ html {
 	align-items: center;
 	height: 128px;
 }
-
+.status .indicators {
+	display: flex;
+	max-width: 400px;
+	width: 100%;
+}
+.status .indicator {
+	display: flex;
+	justify-content: space-between;
+	background: var(--indicator-background-color);
+	border-bottom: 2px solid transparent;
+	padding: 8px 8px 2px;
+	width: 100%;
+	text-align: right;
+	font-size: 22px;
+	margin: 8px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16);
+	border-radius: 2px;
+	align-items: center;
+}
+.status .indicator.active {
+	border-bottom-color: var(--accent-color);
+	box-shadow: 0 4px 5px rgba(0, 0, 0, 0.16);
+}
+.status .current-status {
+	font-size: 13px;
+	height: 16px;
+	text-align: center;
+	color: rgba(0, 0, 0, 0.64);
+}
 .board {
 	background-color: var(--accent-color);
 	padding: 10px 0;
@@ -59,7 +87,18 @@ html {
 	transition: opacity 0.5s cubic-bezier(0.4, 0, 1, 1),
 		transform 0.5s cubic-bezier(0.4, 0, 1, 1), visibility 0.5s step-end;
 }
-
+.winner {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	height: 216px;
+	font-size: 34px;
+	font-weight: bold;
+	text-transform: uppercase;
+	opacity: 0;
+	animation: fade-in 600ms ease-in-out forwards;
+}
 .controls {
 	padding: 16px;
 	text-align: center;
@@ -80,6 +119,14 @@ html {
 .board .cells .cell {
 	position: relative;
 }
+.clickable {
+	position: relative;
+	cursor: pointer;
+	transition: background-color 300ms ease-in-out;
+}
+.clickable:hover {
+	background-color: var(--accent-hover-color);
+}
 
 svg.xo-x path,
 svg.xo-o path {
@@ -92,7 +139,19 @@ svg.xo-x {
 	position: absolute;
 	transform: scale(0.7);
 }
-
+.winner svg.xo-o,
+.winner svg.xo-x {
+	position: inherit;
+	height: 128px;
+	width: 128px;
+}
+.winner .draw svg.xo-o,
+.winner .draw svg.xo-x {
+	position: inherit;
+	height: 96px;
+	width: 96px;
+	margin: -16px;
+}
 svg.xo-x path {
 	stroke-dasharray: 135.764;
 	stroke-dashoffset: 135.764;
@@ -115,4 +174,39 @@ svg.xo-o path {
 		opacity: 1;
 		transform: scale(1);
 	}
+}
+.select {
+	position: relative;
+	margin-right: 74%;
+	margin-top: 10px;
+}
+
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	display: block;
+	background: none;
+	border: none;
+	border-radius: 0;
+	padding: 6px 2px;
+	width: 100%;
+	font-size: 13px;
+	color: #333;
+	outline: none;
+	min-width: 85px;
+	margin-left: 12px;
+}
+.select::before {
+	content: '';
+	border-color: rgba(0, 0, 0, 0.54) transparent;
+	border-style: solid;
+	border-width: 4px 4px 0 4px;
+	display: inline-block;
+	height: 0;
+	vertical-align: top;
+	width: 0;
+	position: absolute;
+	left: 0;
+	top: 12px;
 }
