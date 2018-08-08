@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://www.google.com/search?q=tic+tac+toe" rel="noopener" target="_blank"><img width="200" src="screenshot.png" alt="Screenshot "></a></p>
+  <a href="https://www.google.com/search?q=tic+tac+toe" rel="noopener" target="_blank"><img width="800" src="screenshot.png" alt="Screenshot "></a></p>
 </p>
 
 <h1 align="center">Tic Tac Toe</h1>
