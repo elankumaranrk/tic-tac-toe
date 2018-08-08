@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Cells from './Cells';
+import Background from './svg/Background';
 
 export default class Board extends Component {
 	state = {
@@ -22,6 +23,7 @@ export default class Board extends Component {
 		const { cells } = this.state;
 		return (
 			<div className="board">
+				<Background />
 				<Cells cells={cells} cellClickHandler={this.cellClickHandler} />
 			</div>
 		);
