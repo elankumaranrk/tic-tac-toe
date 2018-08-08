@@ -12,11 +12,13 @@ export default class Game extends Component {
 		isXNext: true,
 		mode: 'easy',
 		ended: false,
-		winner: ''
+		winner: '',
+		started: false
 	};
 	onModeChange = ({ target }) => {
 		const { value } = target;
 		this.setState({ mode: value });
+		this.resetGame();
 	};
 	aiGamePlay = () => {
 		const { mode, cells } = this.state;
@@ -38,7 +40,7 @@ export default class Game extends Component {
 		let newCells = cells.slice();
 		newCells[cellIndex] = isXNext ? 'X' : 'O';
 
-		this.setState({ cells: newCells, isXNext: !isXNext }, () => {
+		this.setState({ cells: newCells, isXNext: !isXNext, started: true }, () => {
 			this.checkWinner();
 			if (mode !== 'faf') {
 				setTimeout(() => {
@@ -70,16 +72,19 @@ export default class Game extends Component {
 			cells: new Array(9).fill(''),
 			isXNext: true,
 			ended: false,
-			winner: ''
+			winner: '',
+			started: false
 		});
 	};
 	render() {
-		const { cells, isXNext, mode, ended, winner } = this.state;
+		const { cells, isXNext, mode, ended, winner, started } = this.state;
 		return (
 			<div>
 				<Status
 					isXNext={isXNext}
 					mode={mode}
+					ended={ended}
+					started={started}
 					onModeChange={this.onModeChange}
 				/>
 				<Board

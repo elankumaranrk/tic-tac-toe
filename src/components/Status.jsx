@@ -2,9 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const Status = ({ isXNext, mode, onModeChange }) => {
+const Status = ({ isXNext, mode, onModeChange, started, ended }) => {
 	const indicatorClassX = classNames('indicator', { active: isXNext });
 	const indicatorClassO = classNames('indicator', { active: !isXNext });
+	const getCurrentStatus = () => {
+		if (!started) return 'Start Game!';
+		if (ended) return 'Game Over!';
+		return `Next turn is:  ${isXNext ? 'X' : 'O'}`;
+	};
 	return (
 		<div className="status">
 			<span className="select">
@@ -25,7 +30,7 @@ const Status = ({ isXNext, mode, onModeChange }) => {
 					<span>0</span>
 				</div>
 			</div>
-			<p className="current-status">Start Game!</p>
+			<p className="current-status">{getCurrentStatus()}</p>
 		</div>
 	);
 };
