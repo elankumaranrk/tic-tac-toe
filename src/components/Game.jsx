@@ -64,6 +64,15 @@ export default class Game extends Component {
 			}
 		});
 	}
+
+	resetGame = () => {
+		this.setState({
+			cells: new Array(9).fill(''),
+			isXNext: true,
+			ended: false,
+			winner: ''
+		});
+	};
 	render() {
 		const { cells, isXNext, mode, ended, winner } = this.state;
 		return (
@@ -79,7 +88,7 @@ export default class Game extends Component {
 					cells={cells}
 					cellClickHandler={this.cellClickHandler}
 				/>
-				<Controls />
+				<Controls onClick={this.resetGame} />
 			</div>
 		);
 	}
